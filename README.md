@@ -1,9 +1,9 @@
 # cedar-engine
 
-[Contributors |](https://github.com/karthiklsarma/cedar-engine/graphs/contributors)
-[Forks |](https://github.com/karthiklsarma/cedar-engine/network/members)
-[Issues |](https://github.com/karthiklsarma/cedar-engine/issues)
-[MIT License |](https://github.com/karthiklsarma/cedar-engine/blob/main/LICENSE)
+[Contributors |](https://github.com/karthiklsarma/cdear-listener/graphs/contributors)
+[Forks |](https://github.com/karthiklsarma/cedar-listener/network/members)
+[Issues |](https://github.com/karthiklsarma/cedar-listener/issues)
+[MIT License |](https://github.com/karthiklsarma/cedar-listener/blob/main/LICENSE)
 
 ## To build and run cedar-server project on localhost:
 
