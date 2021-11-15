@@ -85,6 +85,8 @@ github.com/karthiklsarma/cedar-logging v0.0.0-20211114211450-10efc11e1d03 h1:VfY
 github.com/karthiklsarma/cedar-logging v0.0.0-20211114211450-10efc11e1d03/go.mod h1:tHL/kXR58neKSUCgiIdP7UrlUanLg04Dz4Gfo/tzD9Y=
 github.com/karthiklsarma/cedar-schema v0.0.0-20211114034722-70c2e1a2f3eb h1:/Ckw5BcpQdCBK26MKDj/cy7TR0jBhslKvQbj2d8Lsw0=
 github.com/karthiklsarma/cedar-schema v0.0.0-20211114034722-70c2e1a2f3eb/go.mod h1:EIEsVDRU2j8oYdewvn8eAUmPyICtKTclgFoX9+VR74s=
+github.com/karthiklsarma/cedar-schema v0.0.0-20211115202552-b771d4d632e4 h1:Mpb3GJtwjxswHK/bdWHyGfUxXAANsiSxVAfZ7ffOlnc=
+github.com/karthiklsarma/cedar-schema v0.0.0-20211115202552-b771d4d632e4/go.mod h1:EIEsVDRU2j8oYdewvn8eAUmPyICtKTclgFoX9+VR74s=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/leodido/go-urn v1.2.0 h1:hpXL4XnriNwQ/ABnpepYM/1vCLWNDfUNts8dX3xTG6Y=
 github.com/leodido/go-urn v1.2.0/go.mod h1:+8+nEpDfqqsY+g338gtMEUOtuK+4dEMhiQEgxpxOKII=
