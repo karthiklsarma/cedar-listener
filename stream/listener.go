@@ -38,7 +38,7 @@ func InitiateEventListener() {
 
 	runtimeInfo, err := hub.GetRuntimeInformation(ctx)
 	if err != nil {
-		logging.Error("Failed to obtain runtime info for event hub")
+		logging.Error(fmt.Sprintf("Failed to obtain runtime info for event hub: %v", err))
 	}
 
 	handler := func(c context.Context, event *eventhub.Event) error {
