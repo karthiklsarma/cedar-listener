@@ -14,7 +14,6 @@ func main() {
 			"message": "listener has started",
 		})
 	})
-
 	stream.InitiateEventListener()
 	router.Run(":8080")
 }

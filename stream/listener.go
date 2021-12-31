@@ -7,6 +7,7 @@ import (
 	"time"
 
 	eventhub "github.com/Azure/azure-event-hubs-go/v3"
+	"github.com/karthiklsarma/cedar-listener/storage"
 	"github.com/karthiklsarma/cedar-logging/logging"
 	"github.com/karthiklsarma/cedar-schema/gen"
 	"google.golang.org/protobuf/proto"
@@ -48,7 +49,9 @@ func InitiateEventListener() {
 			return err
 		}
 		logging.Info(fmt.Sprintf("Received event: %v", location))
-		return nil
+
+		storage.Connect()
+		return storage.InsertLocation(location)
 	}
 
 	for _, partitionID := range runtimeInfo.PartitionIDs {
