@@ -19,58 +19,54 @@ const (
 	COSMOSDB_PASSWORD      = "COSMOSDB_PASSWORD"
 )
 
-var (
+const INSERT_QUERY = "INSERT INTO cedarcosmoskeyspace.cedarlocation (id, lat, lng, timestamp, device) VALUES (?, ?, ?, ?, ?)"
+
+type CosmosSink struct {
 	contact_point      string
 	cassandra_port     string
 	cassandra_user     string
 	cassandra_password string
-)
+	cosmos_session     *gocql.Session
+}
 
-var cosmos_session *gocql.Session
-
-const INSERT_QUERY = "INSERT INTO cedarcosmoskeyspace.cedarlocation (id, lat, lng, timestamp, device) VALUES (?, ?, ?, ?, ?)"
-
-func Connect() {
-	if len(contact_point) == 0 {
-		contact_point = os.Getenv(COSMOSDB_CONTACT_POINT)
-	}
-
-	if len(cassandra_port) == 0 {
-		cassandra_port = os.Getenv(COSMOSDB_PORT)
-	}
-
-	if len(cassandra_user) == 0 {
-		cassandra_user = os.Getenv(COSMOSDB_USER)
-	}
-
-	if len(cassandra_password) == 0 {
-		cassandra_password = os.Getenv(COSMOSDB_PASSWORD)
-	}
+func (sink *CosmosSink) Connect() error {
+	sink.contact_point = os.Getenv(COSMOSDB_CONTACT_POINT)
+	sink.cassandra_port = os.Getenv(COSMOSDB_PORT)
+	sink.cassandra_user = os.Getenv(COSMOSDB_USER)
+	sink.cassandra_password = os.Getenv(COSMOSDB_PASSWORD)
 
 	logging.Debug(
 		fmt.Sprintf(
-			"Connecting to Cosmos DB with contact point: [%v], port [%v], user: [%v]", contact_point, cassandra_port, cassandra_user))
+			"Connecting to Cosmos DB with contact point: [%v], port [%v], user: [%v]", sink.contact_point, sink.cassandra_port, sink.cassandra_user))
 
-	if cosmos_session == nil || cosmos_session.Closed() {
-		cosmos_session = getSession(contact_point, cassandra_port, cassandra_user, cassandra_password)
-	}
-}
-
-func InsertLocation(location *gen.Location) error {
-	if cosmos_session == nil {
-		logging.Fatal("Please connect before inserting location.")
-	}
-	err := cosmos_session.Query(INSERT_QUERY).Bind(location.Id, location.Lat, location.Lng, location.Timestamp, location.Device).Exec()
-	if err != nil {
-		logging.Fatal(fmt.Sprintf("Failed to insert location into location table: %v", err))
-		return err
+	if sink.cosmos_session == nil || sink.cosmos_session.Closed() {
+		var err error
+		sink.cosmos_session, err = getSession(sink.contact_point, sink.cassandra_port, sink.cassandra_user, sink.cassandra_password)
+		if err != nil {
+			logging.Fatal(fmt.Sprintf("error fetching cosmos session: %v", err))
+			return err
+		}
 	}
 
-	logging.Info("successfully inserted location into location table.")
 	return nil
 }
 
-func getSession(contactPoint, cassandraPort, user, password string) *gocql.Session {
+func (sink *CosmosSink) InsertLocation(location *gen.Location) (bool, error) {
+	if sink.cosmos_session == nil {
+		logging.Fatal("Please connect before inserting location.")
+		return false, fmt.Errorf("Please connect before inserting location.")
+	}
+	err := sink.cosmos_session.Query(INSERT_QUERY).Bind(location.Id, location.Lat, location.Lng, location.Timestamp, location.Device).Exec()
+	if err != nil {
+		logging.Fatal(fmt.Sprintf("Failed to insert location into location table: %v", err))
+		return false, err
+	}
+
+	logging.Info("successfully inserted location into location table.")
+	return true, nil
+}
+
+func getSession(contactPoint, cassandraPort, user, password string) (*gocql.Session, error) {
 	clusterConfig := gocql.NewCluster(contactPoint)
 	port, err := strconv.Atoi(cassandraPort)
 	if err != nil {
@@ -87,7 +83,8 @@ func getSession(contactPoint, cassandraPort, user, password string) *gocql.Sessi
 	session, err := clusterConfig.CreateSession()
 	if err != nil {
 		logging.Fatal(fmt.Sprintf("Failed to connect to Azure Cosmos DB, err : %v", err))
+		return nil, err
 	}
 
-	return session
+	return session, nil
 }

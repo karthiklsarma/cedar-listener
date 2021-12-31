@@ -42,6 +42,9 @@ func InitiateEventListener() {
 		logging.Error(fmt.Sprintf("Failed to obtain runtime info for event hub: %v", err))
 	}
 
+	var locationSink storage.IStorageSink = &storage.CosmosSink{}
+	locationSink.Connect()
+
 	handler := func(c context.Context, event *eventhub.Event) error {
 		location := &gen.Location{}
 		if err := proto.Unmarshal(event.Data, location); err != nil {
@@ -49,9 +52,15 @@ func InitiateEventListener() {
 			return err
 		}
 		logging.Info(fmt.Sprintf("Received event: %v", location))
+		inserted, err := locationSink.InsertLocation(location)
+		if inserted {
+			logging.Info(fmt.Sprintf("Successfully inserted location: %v", location))
+		}
 
-		storage.Connect()
-		return storage.InsertLocation(location)
+		if err != nil {
+			logging.Error(fmt.Sprintf("Failed to insert location: %v", location))
+		}
+		return err
 	}
 
 	for _, partitionID := range runtimeInfo.PartitionIDs {
