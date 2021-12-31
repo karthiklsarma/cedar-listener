@@ -1,4 +1,4 @@
-# cedar-engine
+# cedar-listener
 
 [Contributors |](https://github.com/karthiklsarma/cdear-listener/graphs/contributors)
 [Forks |](https://github.com/karthiklsarma/cedar-listener/network/members)
@@ -34,7 +34,5 @@ From ./cedar-listener Directory:
   > docker run -d -p 8080:8080 `<IMAGE ID from previous step>`
 
 ## To deploy on azure
-
-- Execute deploy cedar [script](https://github.com/karthiklsarma/cedar-deploy/blob/main/cedar-deploy.sh)
 - Once the Kubernetes cluster and Container registry is deployed, Execute
   > az acr build --registry cedarcr --image cedar-listener:v1 .
