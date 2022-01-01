@@ -14,22 +14,29 @@ import (
 )
 
 var hub *eventhub.Hub
-var stream_connection_string string
+
+type IStreamListener interface {
+	InitiateEventListener()
+}
+
+type EventhubListener struct {
+	stream_connection_string string
+}
 
 func getConnectionString() string {
 	return os.Getenv(STREAM_CONN_ENV)
 }
 
-func InitiateEventListener() {
-	if len(stream_connection_string) == 0 {
+func (listener *EventhubListener) InitiateEventListener() {
+	if len(listener.stream_connection_string) == 0 {
 		logging.Info("stream connection string empty. Fetching...")
-		stream_connection_string = getConnectionString()
+		listener.stream_connection_string = getConnectionString()
 	}
 
 	var err error
 	if hub == nil {
 		logging.Info("hub empty. Initializing...")
-		if hub, err = eventhub.NewHubFromConnectionString(stream_connection_string); err != nil {
+		if hub, err = eventhub.NewHubFromConnectionString(listener.stream_connection_string); err != nil {
 			logging.Error(fmt.Sprintf("error initiating eventhub. error: %v", err))
 		}
 	}
@@ -43,7 +50,9 @@ func InitiateEventListener() {
 	}
 
 	var locationSink storage.IStorageSink = &storage.CosmosSink{}
-	locationSink.Connect()
+	if err := locationSink.Connect(); err != nil {
+		logging.Fatal(fmt.Sprintf("Failed to connect to storage sink: %v", err))
+	}
 
 	handler := func(c context.Context, event *eventhub.Event) error {
 		location := &gen.Location{}
