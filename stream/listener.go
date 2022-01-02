@@ -55,21 +55,26 @@ func (listener *EventhubListener) InitiateEventListener() {
 	}
 
 	handler := func(c context.Context, event *eventhub.Event) error {
-		location := &gen.Location{}
-		if err := proto.Unmarshal(event.Data, location); err != nil {
-			logging.Error("Failed to unmarshal location")
-			return err
-		}
-		logging.Info(fmt.Sprintf("Received event: %v", location))
-		inserted, err := locationSink.InsertLocation(location)
-		if inserted {
-			logging.Info(fmt.Sprintf("Successfully inserted location: %v", location))
-		}
+		errChan := make(chan error)
+		go func(errorChan chan error) {
+			location := &gen.Location{}
+			if err := proto.Unmarshal(event.Data, location); err != nil {
+				logging.Error("Failed to unmarshal location")
+				errorChan <- err
+				return
+			}
+			logging.Info(fmt.Sprintf("Received event: %v", location))
+			inserted, err := locationSink.InsertLocation(location)
+			if inserted {
+				logging.Info(fmt.Sprintf("Successfully inserted location: %v", location))
+			}
 
-		if err != nil {
-			logging.Error(fmt.Sprintf("Failed to insert location: %v", location))
-		}
-		return err
+			if err != nil {
+				logging.Error(fmt.Sprintf("Failed to insert location: %v", location))
+			}
+			errorChan <- err
+		}(errChan)
+		return <-errChan
 	}
 
 	for _, partitionID := range runtimeInfo.PartitionIDs {
