@@ -7,9 +7,9 @@ import (
 	"time"
 
 	eventhub "github.com/Azure/azure-event-hubs-go/v3"
-	"github.com/karthiklsarma/cedar-listener/storage"
 	"github.com/karthiklsarma/cedar-logging/logging"
 	"github.com/karthiklsarma/cedar-schema/gen"
+	"github.com/karthiklsarma/cedar-storage/storage"
 	"google.golang.org/protobuf/proto"
 )
 

@@ -71,6 +71,8 @@ github.com/go-playground/validator/v10 v10.4.1 h1:pH2c5ADXtd66mxoE0Zm9SUhxE20r7a
 github.com/go-playground/validator/v10 v10.4.1/go.mod h1:nlOn6nFhuKACm19sB/8EGNn9GlaMV7XkbRSipzJ0Ii4=
 github.com/gocql/gocql v0.0.0-20211222173705-d73e6b1002a7 h1:jmIMM+nEO+vjz9xaRIg9sZNtNLq5nsSbsxwe1OtRwv4=
 github.com/gocql/gocql v0.0.0-20211222173705-d73e6b1002a7/go.mod h1:3gM2c4D3AnkISwBxGnMMsS8Oy4y2lhbPRsH4xnJrHG8=
+github.com/gocql/gocql v1.0.0 h1:UnbTERpP72VZ/viKE1Q1gPtmLvyTZTvuAstvSRydw/c=
+github.com/gocql/gocql v1.0.0/go.mod h1:3gM2c4D3AnkISwBxGnMMsS8Oy4y2lhbPRsH4xnJrHG8=
 github.com/golang/protobuf v1.3.3/go.mod h1:vzj43D7+SQXF/4pzW/hwtAqwc6iTitCiVSaWz5lYuqw=
 github.com/golang/protobuf v1.5.0 h1:LUVKkCeviFUMKqHa4tXIIij/lbhnMbP7Fn5wKdKkRh4=
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
@@ -95,6 +97,8 @@ github.com/karthiklsarma/cedar-schema v0.0.0-20211114034722-70c2e1a2f3eb h1:/Ckw
 github.com/karthiklsarma/cedar-schema v0.0.0-20211114034722-70c2e1a2f3eb/go.mod h1:EIEsVDRU2j8oYdewvn8eAUmPyICtKTclgFoX9+VR74s=
 github.com/karthiklsarma/cedar-schema v0.0.0-20211115202552-b771d4d632e4 h1:Mpb3GJtwjxswHK/bdWHyGfUxXAANsiSxVAfZ7ffOlnc=
 github.com/karthiklsarma/cedar-schema v0.0.0-20211115202552-b771d4d632e4/go.mod h1:EIEsVDRU2j8oYdewvn8eAUmPyICtKTclgFoX9+VR74s=
+github.com/karthiklsarma/cedar-storage v0.0.0-20220410192825-395249f5c568 h1:Mf9OSfNs2BrVBMJYyQPqkO4hBf9ZGoR0ldBQ5qOrPa0=
+github.com/karthiklsarma/cedar-storage v0.0.0-20220410192825-395249f5c568/go.mod h1:lukaV7S0x3YOul6IKDRuV9YbuKXYcuYmX3zLA+sFxfs=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
