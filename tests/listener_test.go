@@ -125,14 +125,14 @@ func getSession(contactPoint, cassandraPort, user, password string) (*gocql.Sess
 	return session, nil
 }
 
-func ListenerTest(t *testing.T) {
+func TestListener(t *testing.T) {
 	listener := &stream.EventhubListener{}
 	storagesink := &TestStorageSink{}
 	listener.SetStreamConnectionString(test_stream_connection_string)
 	listener.SetLocationSink(storagesink)
 	listener.InitiateEventListener()
 	hub := listener.GetHub()
-	location := &gen.Location{Id: "1", Lat: 1.0, Lng: 1.0, Timestamp: uint64(time.Now().Unix()), Device: "test"}
+	location := &gen.Location{Id: uuid.New().String(), Lat: 1.0, Lng: 1.0, Timestamp: uint64(time.Now().Unix()), Device: "test"}
 	location_bytes, _ := proto.Marshal(location)
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
 	defer cancel()

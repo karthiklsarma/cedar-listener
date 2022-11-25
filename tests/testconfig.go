@@ -1,6 +1,7 @@
 package tests
 
 const (
+	// DO NOT CHECKIN WITH VALUES
 	test_stream_connection_string string = ""
 	test_contact_point            string = ""
 	test_cassandra_port           string = ""

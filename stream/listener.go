@@ -48,7 +48,8 @@ func (listener *EventhubListener) InitiateEventListener() {
 	}
 
 	var err error
-	if listener.hub, err = eventhub.NewHubFromConnectionString(listener.stream_connection_string); err != nil {
+	listener.hub, err = eventhub.NewHubFromConnectionString(listener.stream_connection_string)
+	if err != nil {
 		logging.Error(fmt.Sprintf("error initiating eventhub. error: %v", err))
 	}
 
